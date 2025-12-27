@@ -1,0 +1,48 @@
+{
+  "name": "@jmbish/cli",
+  "version": "0.1.0",
+  "description": "JBishKit CLI - Cloudflare Workers development toolkit",
+  "type": "module",
+  "bin": {
+    "jbish": "./dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "dev": "bun build src/cli.ts --outdir dist --watch",
+    "build": "bun build src/cli.ts --outdir dist --target bun --minify",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "commander": "^12.1.0",
+    "simple-git": "^3.27.0",
+    "ws": "^8.18.0",
+    "ora": "^8.1.1",
+    "chalk": "^5.4.1",
+    "prompts": "^2.4.2",
+    "uuid": "^11.0.5",
+    "zod": "^4.1.13"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "@types/ws": "^8.5.13",
+    "@types/uuid": "^10.0.0",
+    "@types/prompts": "^2.4.9",
+    "typescript": "~5.9.3",
+    "vitest": "~4.0.15"
+  },
+  "keywords": [
+    "cloudflare",
+    "workers",
+    "cli",
+    "ai",
+    "agent"
+  ],
+  "author": "JMBish",
+  "license": "MIT"
+}
