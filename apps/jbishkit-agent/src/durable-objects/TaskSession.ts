@@ -23,7 +23,11 @@ export class TaskSession extends DurableObject {
       this.ws.accept();
 
       this.ws.addEventListener("message", async (event) => {
-        await this.handleMessage(event.data as string);
+        if (typeof event.data === "string") {
+          await this.handleMessage(event.data);
+        } else {
+          this.log("Received non-string WebSocket message", "warn");
+        }
       });
 
       this.ws.addEventListener("error", (event) => {
