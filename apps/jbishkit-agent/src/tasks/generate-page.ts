@@ -119,7 +119,7 @@ export class GeneratePageTask extends BaseTask {
     name: string,
     route: string,
     features: string[],
-    analysis: any,
+    analysis: { framework: string; uiLibrary: string; stateManagement: string; routing: string; },
   ): Promise<{ files: Array<{ path: string; content: string }> }> {
     // TODO: Implement AI-powered code generation
     await this.sleep(1000);
