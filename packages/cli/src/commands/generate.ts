@@ -2,7 +2,7 @@ import { v4 as uuid } from "uuid";
 import { BranchManager } from "../git/branch-manager";
 import { CommitHandler } from "../git/commit-handler";
 import { WebSocketClient } from "../websocket/client";
-import type { TaskMessage, GeneratePageArgs } from "../types";
+import type { TaskMessage } from "../types";
 import { promises as fs } from "fs";
 import path from "path";
 import chalk from "chalk";
