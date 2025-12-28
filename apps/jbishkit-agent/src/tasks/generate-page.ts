@@ -3,7 +3,7 @@ import type { TaskMessage, ValidationResult } from "../types";
 
 export class GeneratePageTask extends BaseTask {
   async execute(task: TaskMessage): Promise<void> {
-    const { pageName, route, features, uiLibrary } = task.args;
+    const { pageName, route, features } = task.args;
 
     this.log(`Generating page: ${pageName}`);
     this.progress(10, "Validating authentication...");
