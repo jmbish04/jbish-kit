@@ -25,30 +25,12 @@ app.get("/ws", async (c) => {
     return c.text("Expected WebSocket", 426);
   }
 
-  // Create WebSocket pair
-  const pair = new WebSocketPair();
-  const [client, server] = Object.values(pair);
-
-  // Create Durable Object session
+  // Get the Durable Object stub.
   const id = c.env.TASK_SESSION.idFromName(`session-${crypto.randomUUID()}`);
   const stub = c.env.TASK_SESSION.get(id);
 
-  // Forward the WebSocket to the Durable Object
-  await stub.fetch(c.req.raw, {
-    headers: {
-      Upgrade: "websocket",
-    },
-  }).then((response) => {
-    // @ts-ignore - WebSocket handling
-    server.accept();
-  });
-
-  return new Response(null, {
-    status: 101,
-    // @ts-ignore - WebSocket upgrade
-    webSocket: client,
-  });
-});
+  // Forward the request to the Durable Object.
+  return stub.fetch(c.req.raw);
 
 // Preview endpoint (for dev server pass-through)
 app.get("/preview/:id/*", async (c) => {
