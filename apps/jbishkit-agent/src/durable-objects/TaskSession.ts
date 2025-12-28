@@ -17,7 +17,7 @@ export class TaskSession extends DurableObject {
     // Handle WebSocket upgrade
     if (request.headers.get("Upgrade") === "websocket") {
       const pair = new WebSocketPair();
-      const [client, server] = Object.values(pair);
+      const { 0: client, 1: server } = pair;
 
       this.ws = server;
       this.ws.accept();
