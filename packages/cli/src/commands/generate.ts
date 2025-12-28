@@ -66,7 +66,7 @@ export async function generatePage(
       repo: repoUrl,
       branch: branchName,
       auth: {
-        github: process.env.GITHUB_TOKEN || "",
+        github: process.env.GITHUB_TOKEN || (() => { throw new Error('GITHUB_TOKEN environment variable is not set.'); })(),
         worker: generateWorkerJWT(),
       },
       args: {
