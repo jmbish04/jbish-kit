@@ -87,10 +87,7 @@ export async function init(
   console.log(chalk.gray("  jbish dev"));
 }
 
-async function createTemplate(
-  projectPath: string,
-  config: any,
-): Promise<void> {
+async function createTemplate(projectPath: string, config: any): Promise<void> {
   // Create basic structure
   const dirs = [
     "apps/web",

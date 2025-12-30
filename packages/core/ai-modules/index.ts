@@ -8,4 +8,4 @@ export {
   type AICallOptions,
   type AIResponse,
   type AIModuleResult,
-} from './BaseAIModule';
+} from "./BaseAIModule";

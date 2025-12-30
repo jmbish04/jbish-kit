@@ -228,7 +228,7 @@ export abstract class BaseAIModule<TInput = any, TOutput = any> {
     } catch (error) {
       const endTime = Date.now();
       const errorMessage =
-        error instanceof Error ? error.message : 'Unknown error';
+        error instanceof Error ? error.message : "Unknown error";
 
       return {
         success: false,
@@ -291,9 +291,7 @@ export abstract class BaseAIModule<TInput = any, TOutput = any> {
    * @param options - Options for the AI call
    * @returns AI response
    */
-  protected async makeAIRequest(
-    options: AICallOptions,
-  ): Promise<AIResponse> {
+  protected async makeAIRequest(options: AICallOptions): Promise<AIResponse> {
     // Placeholder implementation
     // Subclasses or integrations should override this to call real AI APIs
     throw new Error(
@@ -316,7 +314,7 @@ export abstract class BaseAIModule<TInput = any, TOutput = any> {
   ): string {
     let result = template;
     for (const [key, value] of Object.entries(variables)) {
-      result = result.replace(new RegExp(`{{${key}}}`, 'g'), value);
+      result = result.replace(new RegExp(`{{${key}}}`, "g"), value);
     }
     return result;
   }

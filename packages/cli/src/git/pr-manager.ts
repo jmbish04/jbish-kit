@@ -41,7 +41,10 @@ export class PRManager {
     return data.html_url;
   }
 
-  async mergePR(prNumber: number, mergeMethod: "merge" | "squash" | "rebase" = "squash"): Promise<void> {
+  async mergePR(
+    prNumber: number,
+    mergeMethod: "merge" | "squash" | "rebase" = "squash",
+  ): Promise<void> {
     const { owner, repo } = await this.branchManager.getRepoInfo();
 
     const response = await fetch(
@@ -87,7 +90,10 @@ export class PRManager {
       throw new Error(`Failed to get PR status: ${error}`);
     }
 
-    const data = await response.json() as { state: string; mergeable: boolean; /* ...and other properties */ };
+    const data = (await response.json()) as {
+      state: string;
+      mergeable: boolean; /* ...and other properties */
+    };
 
     return {
       state: data.state,

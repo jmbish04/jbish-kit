@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import MarkdownError from "./MarkdownError";
 import {
   getAllWorkspacePaths,
   readJson,
@@ -10,7 +11,6 @@ import {
   type PackageJson,
   type WranglerConfig,
 } from "./util";
-import MarkdownError from "./MarkdownError";
 
 export type LintConfig = {
   projectDirectory: string;
@@ -20,7 +20,7 @@ export type LintConfig = {
 // Configuration constants
 // NOTE: Update TARGET_COMPATIBILITY_DATE periodically to match the latest Cloudflare Workers compatibility date
 // See: https://developers.cloudflare.com/workers/configuration/compatibility-dates/
-const TARGET_COMPATIBILITY_DATE = "2024-12-01";
+const TARGET_COMPATIBILITY_DATE = "2025-10-08";
 const WORKSPACE_SCOPE = "@repo/";
 
 type FileDiagnostic = {

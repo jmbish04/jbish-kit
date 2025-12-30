@@ -3,12 +3,12 @@ import ora, { type Ora } from "ora";
 
 export class Logger {
   private verbose: boolean;
-  private debug: boolean;
+  private isDebug: boolean;
   private spinner?: Ora;
 
   constructor(verbose = true, debug = false) {
     this.verbose = verbose;
-    this.debug = debug;
+    this.isDebug = debug;
   }
 
   info(message: string): void {
@@ -30,7 +30,7 @@ export class Logger {
   }
 
   debug(message: string): void {
-    if (this.debug) {
+    if (this.isDebug) {
       console.log(chalk.gray("[DEBUG]"), message);
     }
   }

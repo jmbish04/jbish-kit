@@ -41,6 +41,7 @@ export class TaskSession extends DurableObject {
       return new Response(null, {
         status: 101,
         webSocket: client,
+        webSocket: client,
       });
     }
 
@@ -68,8 +69,7 @@ export class TaskSession extends DurableObject {
         taskId: this.taskId || "unknown",
         timestamp: Date.now(),
         data: {
-          message:
-            error instanceof Error ? error.message : "Unknown error",
+          message: error instanceof Error ? error.message : "Unknown error",
         },
       });
     }
@@ -112,7 +112,10 @@ export class TaskSession extends DurableObject {
     }
   }
 
-  log(message: string, level: "debug" | "info" | "warn" | "error" = "info"): void {
+  log(
+    message: string,
+    level: "debug" | "info" | "warn" | "error" = "info",
+  ): void {
     if (!this.taskId) return;
 
     this.sendMessage({

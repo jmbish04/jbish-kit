@@ -20,9 +20,9 @@ export function generateAgentTemplate(
 ): string {
   const { tools = [], providers = [] } = options;
 
-  const toolsList = tools.length > 0 ? `['${tools.join("', '")}']` : '[]';
+  const toolsList = tools.length > 0 ? `['${tools.join("', '")}']` : "[]";
   const providersList =
-    providers.length > 0 ? `['${providers.join("', '")}']` : '[]';
+    providers.length > 0 ? `['${providers.join("', '")}']` : "[]";
 
   return `/**
  * @file ${name} - Custom agent implementation

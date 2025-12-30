@@ -28,14 +28,14 @@ This will automatically create a new AI module file with the proper structure.
 1. Create a new file in this directory: `MyAIModule.ts`
 2. Import and extend `BaseAIModule`:
 
-```typescript
-import { BaseAIModule, AIModuleConfig, AICallOptions } from './BaseAIModule';
+````typescript
+import { BaseAIModule, AIModuleConfig, AICallOptions } from "./BaseAIModule";
 
 /**
  * MyAIModule - Brief description of what this AI module does
- * 
+ *
  * This module uses AI to [specific task] by [method].
- * 
+ *
  * @example
  * ```typescript
  * const module = new MyAIModule();
@@ -47,13 +47,13 @@ import { BaseAIModule, AIModuleConfig, AICallOptions } from './BaseAIModule';
  */
 export class MyAIModule extends BaseAIModule<InputType, OutputType> {
   constructor() {
-    super('MyAIModule', {
-      description: 'Brief description of the AI module',
-      version: '1.0.0',
-      providers: ['anthropic', 'openai', 'cloudflare'],
-      defaultProvider: 'anthropic',
-      defaultModel: 'claude-3-sonnet-20240229',
-      capabilities: ['text-generation', 'analysis']
+    super("MyAIModule", {
+      description: "Brief description of the AI module",
+      version: "1.0.0",
+      providers: ["anthropic", "openai", "cloudflare"],
+      defaultProvider: "anthropic",
+      defaultModel: "claude-3-sonnet-20240229",
+      capabilities: ["text-generation", "analysis"],
     });
   }
 
@@ -74,7 +74,7 @@ export class MyAIModule extends BaseAIModule<InputType, OutputType> {
       provider: this.config.defaultProvider!,
       model: this.config.defaultModel!,
       temperature: 0.7,
-      maxTokens: 1000
+      maxTokens: 1000,
     });
 
     // Process the AI response
@@ -92,9 +92,9 @@ Input: {{input}}
 Please provide {{output_type}}.`;
 
     return this.formatPrompt(template, {
-      task: 'your task',
+      task: "your task",
       input: JSON.stringify(input),
-      output_type: 'your output format'
+      output_type: "your output format",
     });
   }
 
@@ -106,35 +106,41 @@ Please provide {{output_type}}.`;
     return JSON.parse(content);
   }
 }
-```
+````
 
 ## AI Module Best Practices
 
 ### 1. Clear Purpose
+
 - Each module should have a single, well-defined purpose
 - Name modules descriptively: `TextSummarizerModule`, `CodeAnalyzerModule`
 
 ### 2. Prompt Engineering
+
 - Use clear, specific prompts
 - Include examples in your prompts when helpful
 - Use the `formatPrompt()` helper for template-based prompts
 
 ### 3. Provider Configuration
+
 - Support multiple providers for resilience
 - Set sensible defaults for provider and model
 - Document which providers work best for your use case
 
 ### 4. Response Handling
+
 - Always validate AI responses
 - Handle malformed responses gracefully
 - Parse structured data (JSON) when possible
 
 ### 5. Error Handling
+
 - Implement retry logic for transient failures
 - Provide meaningful error messages
 - Log failed AI calls for debugging
 
 ### 6. Cost Management
+
 - Monitor token usage via statistics
 - Set appropriate maxTokens limits
 - Consider caching responses for repeated queries
@@ -151,25 +157,25 @@ interface SummaryInput {
 
 export class TextSummarizerModule extends BaseAIModule<SummaryInput, string> {
   constructor() {
-    super('TextSummarizer', {
-      description: 'Summarizes long text into concise summaries',
-      version: '1.0.0',
-      providers: ['anthropic', 'openai'],
-      defaultProvider: 'anthropic',
-      defaultModel: 'claude-3-haiku-20240307', // Fast and cost-effective
-      capabilities: ['text-summarization']
+    super("TextSummarizer", {
+      description: "Summarizes long text into concise summaries",
+      version: "1.0.0",
+      providers: ["anthropic", "openai"],
+      defaultProvider: "anthropic",
+      defaultModel: "claude-3-haiku-20240307", // Fast and cost-effective
+      capabilities: ["text-summarization"],
     });
   }
 
   protected async process(input: SummaryInput): Promise<string> {
     const maxLength = input.maxLength || 200;
-    
+
     const response = await this.callAI({
       prompt: `Summarize the following text in ${maxLength} words or less:\n\n${input.text}`,
       provider: this.config.defaultProvider!,
       model: this.config.defaultModel!,
       temperature: 0.3, // Lower temperature for consistent summaries
-      maxTokens: Math.ceil(maxLength * 1.5) // Words to tokens approximation
+      maxTokens: Math.ceil(maxLength * 1.5), // Words to tokens approximation
     });
 
     return response.content.trim();
@@ -179,7 +185,7 @@ export class TextSummarizerModule extends BaseAIModule<SummaryInput, string> {
 
 ### Complex Multi-Step Module
 
-```typescript
+````typescript
 interface CodeReviewInput {
   code: string;
   language: string;
@@ -189,7 +195,7 @@ interface CodeReviewInput {
 interface CodeReviewOutput {
   issues: Array<{
     line: number;
-    severity: 'error' | 'warning' | 'info';
+    severity: "error" | "warning" | "info";
     message: string;
     suggestion?: string;
   }>;
@@ -197,15 +203,18 @@ interface CodeReviewOutput {
   summary: string;
 }
 
-export class CodeReviewerModule extends BaseAIModule<CodeReviewInput, CodeReviewOutput> {
+export class CodeReviewerModule extends BaseAIModule<
+  CodeReviewInput,
+  CodeReviewOutput
+> {
   constructor() {
-    super('CodeReviewer', {
-      description: 'AI-powered code review with suggestions',
-      version: '1.0.0',
-      providers: ['anthropic', 'openai'],
-      defaultProvider: 'anthropic',
-      defaultModel: 'claude-3-sonnet-20240229',
-      capabilities: ['code-analysis', 'security-review', 'best-practices']
+    super("CodeReviewer", {
+      description: "AI-powered code review with suggestions",
+      version: "1.0.0",
+      providers: ["anthropic", "openai"],
+      defaultProvider: "anthropic",
+      defaultModel: "claude-3-sonnet-20240229",
+      capabilities: ["code-analysis", "security-review", "best-practices"],
     });
   }
 
@@ -217,7 +226,7 @@ export class CodeReviewerModule extends BaseAIModule<CodeReviewInput, CodeReview
       provider: this.config.defaultProvider!,
       model: this.config.defaultModel!,
       temperature: 0.2, // Low temperature for consistent analysis
-      maxTokens: 2000
+      maxTokens: 2000,
     });
 
     const issues = this.parseIssues(issuesResponse.content);
@@ -229,13 +238,13 @@ export class CodeReviewerModule extends BaseAIModule<CodeReviewInput, CodeReview
       provider: this.config.defaultProvider!,
       model: this.config.defaultModel!,
       temperature: 0.5,
-      maxTokens: 500
+      maxTokens: 500,
     });
 
     return {
       issues,
       overallRating: this.calculateRating(issues),
-      summary: summaryResponse.content.trim()
+      summary: summaryResponse.content.trim(),
     };
   }
 
@@ -260,8 +269,8 @@ Return a JSON array of issues with format:
       {
         language: input.language,
         code: input.code,
-        context: input.context ? `Context: ${input.context}\n` : ''
-      }
+        context: input.context ? `Context: ${input.context}\n` : "",
+      },
     );
   }
 
@@ -269,11 +278,12 @@ Return a JSON array of issues with format:
     return `Based on the code review that found ${issues.length} issues, provide a brief summary of the code quality and main areas for improvement.`;
   }
 
-  private parseIssues(content: string): CodeReviewOutput['issues'] {
+  private parseIssues(content: string): CodeReviewOutput["issues"] {
     try {
       // Extract JSON from markdown code blocks if present
-      const jsonMatch = content.match(/```json\n([\s\S]*?)\n```/) || 
-                       content.match(/\[[\s\S]*\]/);
+      const jsonMatch =
+        content.match(/```json\n([\s\S]*?)\n```/) ||
+        content.match(/\[[\s\S]*\]/);
       if (jsonMatch) {
         return JSON.parse(jsonMatch[1] || jsonMatch[0]);
       }
@@ -284,15 +294,15 @@ Return a JSON array of issues with format:
   }
 
   private calculateRating(issues: any[]): number {
-    const errorCount = issues.filter(i => i.severity === 'error').length;
-    const warningCount = issues.filter(i => i.severity === 'warning').length;
-    
+    const errorCount = issues.filter((i) => i.severity === "error").length;
+    const warningCount = issues.filter((i) => i.severity === "warning").length;
+
     // Simple rating algorithm: 10 - (errors * 2) - (warnings * 0.5)
-    const rating = Math.max(0, 10 - (errorCount * 2) - (warningCount * 0.5));
+    const rating = Math.max(0, 10 - errorCount * 2 - warningCount * 0.5);
     return Math.round(rating * 10) / 10;
   }
 }
-```
+````
 
 ## Provider Integration
 
@@ -309,7 +319,7 @@ protected async makeAIRequest(options: AICallOptions): Promise<AIResponse> {
   } else if (options.provider === 'cloudflare') {
     return this.callCloudflareAI(options);
   }
-  
+
   throw new Error(`Unsupported provider: ${options.provider}`);
 }
 
@@ -331,7 +341,7 @@ private async callAnthropic(options: AICallOptions): Promise<AIResponse> {
   });
 
   const data = await response.json();
-  
+
   return {
     content: data.content[0].text,
     provider: 'anthropic',
@@ -350,39 +360,43 @@ Create test files with mocked AI responses:
 
 ```typescript
 // MyAIModule.test.ts
-import { describe, it, expect, vi } from 'vitest';
-import { MyAIModule } from './MyAIModule';
+import { describe, it, expect, vi } from "vitest";
+import { MyAIModule } from "./MyAIModule";
 
-describe('MyAIModule', () => {
-  it('should process input successfully', async () => {
+describe("MyAIModule", () => {
+  it("should process input successfully", async () => {
     const module = new MyAIModule();
-    
+
     // Mock the AI call
-    vi.spyOn(module as any, 'makeAIRequest').mockResolvedValue({
-      content: 'Mocked AI response',
-      provider: 'anthropic',
-      model: 'claude-3-sonnet-20240229',
-      metadata: { tokens: 100 }
+    vi.spyOn(module as any, "makeAIRequest").mockResolvedValue({
+      content: "Mocked AI response",
+      provider: "anthropic",
+      model: "claude-3-sonnet-20240229",
+      metadata: { tokens: 100 },
     });
 
-    const result = await module.run({ /* input */ });
-    
+    const result = await module.run({
+      /* input */
+    });
+
     expect(result.success).toBe(true);
     expect(result.data).toBeDefined();
   });
 
-  it('should track AI usage statistics', async () => {
+  it("should track AI usage statistics", async () => {
     const module = new MyAIModule();
-    
-    vi.spyOn(module as any, 'makeAIRequest').mockResolvedValue({
-      content: 'Response',
-      provider: 'anthropic',
-      model: 'test',
-      metadata: { tokens: 50 }
+
+    vi.spyOn(module as any, "makeAIRequest").mockResolvedValue({
+      content: "Response",
+      provider: "anthropic",
+      model: "test",
+      metadata: { tokens: 50 },
     });
 
-    await module.run({ /* input */ });
-    
+    await module.run({
+      /* input */
+    });
+
     const stats = module.getStats();
     expect(stats.totalCalls).toBeGreaterThan(0);
     expect(stats.totalTokens).toBeGreaterThan(0);
@@ -395,42 +409,42 @@ describe('MyAIModule', () => {
 ### In API Routes
 
 ```typescript
-import { TextSummarizerModule } from '@repo/core/ai-modules';
+import { TextSummarizerModule } from "@repo/core/ai-modules";
 
 export default {
   async fetch(request: Request): Promise<Response> {
     const { text } = await request.json();
-    
+
     const module = new TextSummarizerModule();
     const result = await module.run({ text, maxLength: 150 });
-    
+
     if (!result.success) {
       return Response.json({ error: result.error }, { status: 500 });
     }
-    
+
     return Response.json({ summary: result.data });
-  }
+  },
 };
 ```
 
 ### In Worker Agents
 
 ```typescript
-import { CodeReviewerModule } from '@repo/core/ai-modules';
-import { BaseAgent } from '@repo/core/agents';
+import { CodeReviewerModule } from "@repo/core/ai-modules";
+import { BaseAgent } from "@repo/core/agents";
 
 export class CodeReviewAgent extends BaseAgent {
   private reviewer = new CodeReviewerModule();
 
   protected async execute(input: any): Promise<any> {
     await this.reviewer.initialize();
-    
+
     const result = await this.reviewer.run({
       code: input.code,
       language: input.language,
-      context: input.context
+      context: input.context,
     });
-    
+
     return result.data;
   }
 }

@@ -1,9 +1,9 @@
-import "zx/globals";
 import { parse, stringify } from "comment-json";
+import subprocess from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import toml from "toml";
-import subprocess from "node:child_process";
+import "zx/globals";
 import MarkdownError from "./MarkdownError";
 
 export type PackageJson = {
@@ -105,7 +105,7 @@ export async function actionWithSummary(
 
 /**
  * Check if a file is ignored by git.
- * 
+ *
  * Note: This function makes synchronous git calls. For large file sets,
  * consider batching check-ignore calls or using async operations.
  * Current usage is acceptable as it's called during workspace linting

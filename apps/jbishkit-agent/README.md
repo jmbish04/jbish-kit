@@ -44,11 +44,13 @@ Deployed Worker Agent for executing AI-powered development tasks in a sandbox en
 ## Environment Variables
 
 Required:
+
 - `GITHUB_TOKEN` - GitHub API token
 - `ANTHROPIC_API_KEY` - Anthropic API key
 - `WORKER_SECRET` - JWT secret for authentication
 
 Optional:
+
 - `OPENAI_API_KEY` - OpenAI API key
 - `CLOUDFLARE_API_TOKEN` - Cloudflare API token
 
@@ -72,6 +74,7 @@ bun logs
 Manages WebSocket connections and task execution state.
 
 **Methods:**
+
 - `sendMessage(message)` - Send message to CLI
 - `log(message, level)` - Log message
 - `progress(percent, message)` - Update progress

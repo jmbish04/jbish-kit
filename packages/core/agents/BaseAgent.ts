@@ -118,14 +118,14 @@ export abstract class BaseAgent<TInput = any, TOutput = any> {
    */
   async initialize(): Promise<void> {
     if (this.initialized) {
-      this.log('Agent already initialized');
+      this.log("Agent already initialized");
       return;
     }
 
-    this.log('Initializing agent...');
+    this.log("Initializing agent...");
     await this.onInitialize();
     this.initialized = true;
-    this.log('Agent initialized successfully');
+    this.log("Agent initialized successfully");
   }
 
   /**
@@ -173,7 +173,7 @@ export abstract class BaseAgent<TInput = any, TOutput = any> {
     } catch (error) {
       const endTime = Date.now();
       const errorMessage =
-        error instanceof Error ? error.message : 'Unknown error';
+        error instanceof Error ? error.message : "Unknown error";
 
       this.log(`Agent execution failed: ${errorMessage}`);
 
@@ -211,10 +211,10 @@ export abstract class BaseAgent<TInput = any, TOutput = any> {
    * Called when the agent is no longer needed.
    */
   async cleanup(): Promise<void> {
-    this.log('Cleaning up agent resources...');
+    this.log("Cleaning up agent resources...");
     await this.onCleanup();
     this.initialized = false;
-    this.log('Agent cleanup completed');
+    this.log("Agent cleanup completed");
   }
 
   /**
@@ -237,7 +237,7 @@ export abstract class BaseAgent<TInput = any, TOutput = any> {
     this.logs.push(logEntry);
 
     // Also output to console in development
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === "development") {
       console.log(logEntry);
     }
   }

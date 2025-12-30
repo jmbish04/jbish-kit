@@ -17,11 +17,13 @@ npm run cli add agent <name> [options]
 ```
 
 **Arguments:**
+
 - `<name>` - Name of the agent (e.g., DocumentAnalyzer, WebScraper)
   - Must start with an uppercase letter
   - Will automatically append "Agent" suffix if not present
 
 **Options:**
+
 - `-d, --dir <directory>` - Output directory (default: `packages/core/agents`)
 - `--tools <tools>` - Comma-separated list of tools the agent uses
 - `--providers <providers>` - Comma-separated list of AI providers
@@ -68,11 +70,13 @@ npm run cli add ai-module <name> [options]
 ```
 
 **Arguments:**
+
 - `<name>` - Name of the AI module (e.g., TextSummarizer, CodeAnalyzer)
   - Must start with an uppercase letter
   - Will automatically append "Module" suffix if not present
 
 **Options:**
+
 - `-d, --dir <directory>` - Output directory (default: `packages/core/ai-modules`)
 - `--providers <providers>` - Comma-separated AI providers (default: `anthropic,openai`)
 - `--default-provider <provider>` - Default AI provider (default: first in list)
@@ -124,10 +128,10 @@ Edit `packages/core/agents/DocumentParserAgent.ts`:
 ```typescript
 protected async execute(input: DocumentParserAgentInput): Promise<DocumentParserAgentOutput> {
   this.log('Parsing document...');
-  
+
   const content = await this.parseDocument(input.url);
   const metadata = this.extractMetadata(content);
-  
+
   return {
     content,
     metadata
@@ -138,13 +142,13 @@ protected async execute(input: DocumentParserAgentInput): Promise<DocumentParser
 3. **Use the agent:**
 
 ```typescript
-import { DocumentParserAgent } from '@repo/core/agents/DocumentParserAgent';
+import { DocumentParserAgent } from "@repo/core/agents/DocumentParserAgent";
 
 const agent = new DocumentParserAgent();
-const result = await agent.run({ url: 'https://example.com/doc.pdf' });
+const result = await agent.run({ url: "https://example.com/doc.pdf" });
 
 if (result.success) {
-  console.log('Parsed:', result.data);
+  console.log("Parsed:", result.data);
 }
 ```
 
@@ -163,7 +167,7 @@ Edit `packages/core/ai-modules/TextSummarizerModule.ts`:
 ```typescript
 protected async process(input: TextSummarizerModuleInput): Promise<TextSummarizerModuleOutput> {
   const prompt = `Summarize this text in ${input.maxWords || 100} words:\n\n${input.text}`;
-  
+
   const response = await this.callAI({
     prompt,
     provider: this.config.defaultProvider!,
@@ -171,7 +175,7 @@ protected async process(input: TextSummarizerModuleInput): Promise<TextSummarize
     temperature: 0.3,
     maxTokens: 200
   });
-  
+
   return {
     summary: response.content.trim(),
     originalLength: input.text.length,
@@ -183,17 +187,17 @@ protected async process(input: TextSummarizerModuleInput): Promise<TextSummarize
 3. **Use the module:**
 
 ```typescript
-import { TextSummarizerModule } from '@repo/core/ai-modules/TextSummarizerModule';
+import { TextSummarizerModule } from "@repo/core/ai-modules/TextSummarizerModule";
 
 const module = new TextSummarizerModule();
 const result = await module.run({
-  text: 'Long text to summarize...',
-  maxWords: 50
+  text: "Long text to summarize...",
+  maxWords: 50,
 });
 
 if (result.success) {
-  console.log('Summary:', result.data.summary);
-  console.log('Tokens used:', result.metadata?.totalTokens);
+  console.log("Summary:", result.data.summary);
+  console.log("Tokens used:", result.metadata?.totalTokens);
 }
 ```
 
@@ -295,6 +299,7 @@ npm run cli add agent MyAgent
 ### "Agent/Module already exists"
 
 The CLI prevents overwriting existing files. Either:
+
 1. Delete the existing file first
 2. Choose a different name
 3. Manually edit the existing file
@@ -326,6 +331,7 @@ npm run typecheck
 ## Support
 
 For issues or questions:
+
 - Check the generated code comments
 - Review the base class implementations
 - Consult the main project README

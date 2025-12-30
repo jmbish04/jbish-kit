@@ -20,8 +20,8 @@ export function generateAIModuleTemplate(
   options: AIModuleTemplateOptions = {},
 ): string {
   const {
-    providers = ['anthropic', 'openai'],
-    defaultProvider = 'anthropic',
+    providers = ["anthropic", "openai"],
+    defaultProvider = "anthropic",
     defaultModel,
   } = options;
 
@@ -104,7 +104,7 @@ export interface ${name}Output {
  * [Add detailed description of what this AI module does and how it uses AI]
  *
  * Supported Providers:
-${providers.map((p) => ` * - ${p}`).join('\n')}
+${providers.map((p) => ` * - ${p}`).join("\n")}
  *
  * Key Features:
  * - [Feature 1]

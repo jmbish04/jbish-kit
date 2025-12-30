@@ -5,18 +5,20 @@
  * This CLI provides commands for managing agents, AI modules, and code generation.
  */
 
-import { Command } from "commander";
 import chalk from "chalk";
-import { init } from "./commands/init";
-import { generatePage } from "./commands/generate";
+import { Command } from "commander";
 import { addAgent } from "./commands/add-agent";
 import { addAIModule } from "./commands/add-ai-module";
+import { generatePage } from "./commands/generate";
+import { init } from "./commands/init";
 
 const program = new Command();
 
 program
   .name("jbish")
-  .description("JBishKit - Cloudflare Workers development toolkit with AI agents")
+  .description(
+    "JBishKit - Cloudflare Workers development toolkit with AI agents",
+  )
   .version("0.1.0");
 
 // Init command
@@ -74,9 +76,7 @@ generate
   });
 
 // Health commands
-const health = program
-  .command("health")
-  .description("Health check system");
+const health = program.command("health").description("Health check system");
 
 health
   .command("audit")
@@ -116,7 +116,7 @@ program
   .description("Deploy to Cloudflare")
   .option("--preview", "Deploy preview with validation")
   .action(async (env, options) => {
-    console.log(chalk.blue("Deploying to:", env || "production"));
+    console.log(chalk.blue(`Deploying to ${env || "production"}...`));
     console.log("Options:", options);
     // TODO: Implement deploy
   });
@@ -145,10 +145,48 @@ add
 add
   .command("ai-module <name>")
   .description("Add a new AI module extending BaseAIModule")
-  .option("-d, --dir <directory>", "Output directory", "packages/core/ai-modules")
-  .option("--providers <providers>", "Comma-separated list of AI providers", "anthropic,openai")
+  .option(
+    "-d, --dir <directory>",
+    "Output directory",
+    "packages/core/ai-modules",
+  )
+  .option(
+    "--providers <providers>",
+    "Comma-separated list of AI providers",
+    "anthropic,openai",
+  )
   .option("--default-provider <provider>", "Default AI provider", "anthropic")
   .option("--default-model <model>", "Default AI model")
   .action(addAIModule);
 
+// Agent commands
+const agent = program
+  .command("agent")
+  .description("Interact with JBishKit agent");
+
+agent
+  .command("task <description>")
+  .description("Send custom task to agent")
+  .action(async (description) => {
+    console.log(chalk.blue("Sending task to agent:", description));
+    // TODO: Implement custom task
+  });
+
+agent
+  .command("logs")
+  .description("View agent logs")
+  .action(async () => {
+    console.log(chalk.blue("Agent logs:"));
+    // TODO: Implement agent logs
+  });
+
+agent
+  .command("status")
+  .description("Check agent availability")
+  .action(async () => {
+    console.log(chalk.blue("Agent status:"));
+    // TODO: Implement agent status
+  });
+
+// Parse arguments
 program.parse();
