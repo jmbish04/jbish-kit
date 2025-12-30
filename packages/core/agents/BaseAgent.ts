@@ -152,7 +152,7 @@ export abstract class BaseAgent<TInput = any, TOutput = any> {
     }
 
     const startTime = Date.now();
-    this.log(`Executing agent with input: ${JSON.stringify(input)}`);
+    this.log(`Executing agent...`);
 
     try {
       const data = await this.execute(input);
