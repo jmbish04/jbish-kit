@@ -1,0 +1,35 @@
+{
+  "name": "jbishkit-agent",
+  "main": "src/index.ts",
+  "compatibility_date": "2024-12-01",
+  "compatibility_flags": ["nodejs_compat"],
+
+  "observability": {
+    "enabled": true
+  },
+
+  "vars": {
+    "ENVIRONMENT": "development"
+  },
+
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "TASK_SESSION",
+        "class_name": "TaskSession"
+      }
+    ]
+  },
+
+  "[[migrations]]": {
+    "tag": "v1",
+    "new_classes": ["TaskSession"]
+  },
+
+  "kv_namespaces": [
+    {
+      "binding": "PREVIEW_MAPPINGS",
+      "id": "preview_mappings"
+    }
+  ]
+}
