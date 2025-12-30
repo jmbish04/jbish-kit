@@ -40,7 +40,7 @@ export class TaskSession extends DurableObject {
 
       return new Response(null, {
         status: 101,
-        // @ts-ignore - WebSocket upgrade
+        webSocket: client,
         webSocket: client,
       });
     }
