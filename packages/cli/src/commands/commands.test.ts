@@ -5,7 +5,7 @@ import { addAgent } from './add-agent';
 import { addAIModule } from './add-ai-module';
 
 describe('CLI Commands', () => {
-  const testDir = '/tmp/jbish-cli-test';
+  const testDir = path.join(tmpdir(), 'jbish-cli-test');
   
   beforeEach(() => {
     // Create test directory
