@@ -3,17 +3,27 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "bin": {
+    "repo-cli": "./dist/index.js"
+  },
   "scripts": {
+    "build": "tsc",
+    "postinstall": "bun run build",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@commander-js/extra-typings": "^14.0.0",
     "@modelcontextprotocol/sdk": "^1.24.3",
+    "commander": "^14.0.2",
+    "comment-json": "^4.4.1",
     "execa": "^9.6.1",
     "got": "^14.6.5",
+    "toml": "^3.0.0",
     "zx": "^8.8.5"
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
+    "@types/node": "^24.10.1",
     "typescript": "~5.9.3"
   }
 }
