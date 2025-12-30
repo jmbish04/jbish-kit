@@ -1,7 +1,13 @@
 /**
  * @file Core package entrypoint.
  *
- * Placeholder for shared utilities and WebSocket functionality.
+ * Exports shared utilities, agents, and AI modules.
  */
+
+// Export agents
+export * from './agents';
+
+// Export AI modules
+export * from './ai-modules';
 
 export default {};
