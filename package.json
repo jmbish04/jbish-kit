@@ -16,6 +16,8 @@
   "scripts": {
     "dev": "bun --filter @repo/web --filter @repo/api --filter @repo/app dev",
     "lint": "eslint --cache --report-unused-disable-directives .",
+    "lint:repo": "bun --filter @repo/scripts build && node scripts/dist/index.js lint",
+    "lint:repo:fix": "bun --filter @repo/scripts build && node scripts/dist/index.js lint --fix",
     "test": "vitest",
     "typecheck": "tsc --build",
     "build:types": "tsc --build",
