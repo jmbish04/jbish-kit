@@ -31,6 +31,7 @@ app.get("/ws", async (c) => {
 
   // Forward the request to the Durable Object.
   return stub.fetch(c.req.raw);
+});
 
 // Preview endpoint (for dev server pass-through)
 app.get("/preview/:id/*", async (c) => {
