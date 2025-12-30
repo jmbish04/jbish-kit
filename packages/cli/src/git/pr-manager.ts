@@ -87,7 +87,7 @@ export class PRManager {
       throw new Error(`Failed to get PR status: ${error}`);
     }
 
-    const data = (await response.json()) as any;
+    const data = await response.json() as { state: string; mergeable: boolean; /* ...and other properties */ };
 
     return {
       state: data.state,
