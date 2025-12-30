@@ -60,13 +60,20 @@ export async function generatePage(
 
     // 5. Send task to agent
     const repoUrl = await branchManager.getRemoteUrl();
+    
+    // Validate required environment variables
+    const githubToken = process.env.GITHUB_TOKEN;
+    if (!githubToken) {
+      throw new Error('GITHUB_TOKEN environment variable is not set.');
+    }
+    
     const taskMessage: TaskMessage = {
       type: "task:generate_page",
       taskId,
       repo: repoUrl,
       branch: branchName,
       auth: {
-        github: process.env.GITHUB_TOKEN || (() => { throw new Error('GITHUB_TOKEN environment variable is not set.'); })(),
+        github: githubToken,
         worker: generateWorkerJWT(),
       },
       args: {

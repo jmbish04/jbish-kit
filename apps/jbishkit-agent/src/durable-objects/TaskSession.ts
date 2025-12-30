@@ -41,7 +41,6 @@ export class TaskSession extends DurableObject {
       return new Response(null, {
         status: 101,
         webSocket: client,
-        webSocket: client,
       });
     }
 

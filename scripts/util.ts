@@ -103,6 +103,14 @@ export async function actionWithSummary(
   }
 }
 
+/**
+ * Check if a file is ignored by git.
+ * 
+ * Note: This function makes synchronous git calls. For large file sets,
+ * consider batching check-ignore calls or using async operations.
+ * Current usage is acceptable as it's called during workspace linting
+ * which is an infrequent operation.
+ */
 function gitIgnored(filePath: string): boolean {
   try {
     subprocess.execFileSync("git", ["check-ignore", "--", filePath], {
