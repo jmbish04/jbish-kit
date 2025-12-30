@@ -257,7 +257,7 @@ export class ${name} extends BaseAIModule<${name}Input, ${name}Output> {
     }
 
     throw new Error(
-      \`AI provider '\${options.provider}' not implemented. Add integration in makeAIRequest().\`,
+      \`AI provider "\${options.provider}" not implemented. Add integration in makeAIRequest().\`,
     );
   }
 

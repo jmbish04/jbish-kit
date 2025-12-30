@@ -194,7 +194,7 @@ export class ${name} extends BaseAgent<${name}Input, ${name}Output> {
     // 4. Return result
 
     // Placeholder - replace with actual implementation
-    throw new Error('${name}.execute() not implemented yet');
+    throw new Error(\`\${this.name}.execute() not implemented yet\`);
 
     // Example return (uncomment and modify):
     // return {

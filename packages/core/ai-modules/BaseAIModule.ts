@@ -297,7 +297,7 @@ export abstract class BaseAIModule<TInput = any, TOutput = any> {
     // Placeholder implementation
     // Subclasses or integrations should override this to call real AI APIs
     throw new Error(
-      `AI provider '${options.provider}' not implemented. Override makeAIRequest() to add AI integration.`,
+      `AI provider "${options.provider}" not implemented. Override makeAIRequest() to add AI integration.`,
     );
   }
 
