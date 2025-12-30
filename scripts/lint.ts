@@ -194,13 +194,13 @@ function lintPackageJson(
   const pkg = readJson(filePath) as PackageJson;
   const problems: string[] = [];
 
-  if (!pkg.private && pkg.name?.startsWith("@repo/")) {
+  if (!pkg.private && pkg.name?.startsWith(WORKSPACE_SCOPE)) {
     problems.push('"private" should be set to true for workspace packages');
   }
 
-  if (pkg.version && pkg.private) {
+  if (pkg.version && pkg.version !== "0.0.0" && pkg.private) {
     problems.push(
-      '"version" should not be set for private workspace packages (or should be "0.0.0")',
+      '"version" should not be set (or should be "0.0.0") for private workspace packages',
     );
   }
 
