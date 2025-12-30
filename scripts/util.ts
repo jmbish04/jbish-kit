@@ -75,7 +75,9 @@ export async function actionWithSummary(
 
 function gitIgnored(filePath: string): boolean {
   try {
-    subprocess.execSync(`git check-ignore ${filePath}`);
+    subprocess.execFileSync("git", ["check-ignore", "--", filePath], {
+      stdio: ["pipe", "pipe", "pipe"],
+    });
     return true;
   } catch {
     return false;
