@@ -23,23 +23,53 @@ export type WranglerConfig = {
 };
 
 export function readToml(filePath: string): unknown {
-  return toml.parse(fs.readFileSync(filePath, { encoding: "utf-8" }));
+  try {
+    return toml.parse(fs.readFileSync(filePath, { encoding: "utf-8" }));
+  } catch (err) {
+    throw new Error(
+      `Failed to read or parse TOML file at ${filePath}: ${(err as Error).message}`,
+    );
+  }
 }
 
 export function readJsonC(filePath: string): unknown {
-  return parse(fs.readFileSync(filePath, { encoding: "utf-8" }));
+  try {
+    return parse(fs.readFileSync(filePath, { encoding: "utf-8" }));
+  } catch (err) {
+    throw new Error(
+      `Failed to read or parse JSONC file at ${filePath}: ${(err as Error).message}`,
+    );
+  }
 }
 
 export function writeJsonC(filePath: string, object: unknown) {
-  fs.writeFileSync(filePath, stringify(object, undefined, 2) + "\n");
+  try {
+    fs.writeFileSync(filePath, stringify(object, undefined, 2) + "\n");
+  } catch (err) {
+    throw new Error(
+      `Failed to write JSONC file at ${filePath}: ${(err as Error).message}`,
+    );
+  }
 }
 
 export function readJson(filePath: string): unknown {
-  return JSON.parse(fs.readFileSync(filePath, { encoding: "utf-8" }));
+  try {
+    return JSON.parse(fs.readFileSync(filePath, { encoding: "utf-8" }));
+  } catch (err) {
+    throw new Error(
+      `Failed to read or parse JSON file at ${filePath}: ${(err as Error).message}`,
+    );
+  }
 }
 
 export function writeJson(filePath: string, object: unknown) {
-  fs.writeFileSync(filePath, JSON.stringify(object, undefined, 2) + "\n");
+  try {
+    fs.writeFileSync(filePath, JSON.stringify(object, undefined, 2) + "\n");
+  } catch (err) {
+    throw new Error(
+      `Failed to write JSON file at ${filePath}: ${(err as Error).message}`,
+    );
+  }
 }
 
 export async function actionWithSummary(

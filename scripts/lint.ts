@@ -17,7 +17,11 @@ export type LintConfig = {
   fix: boolean;
 };
 
+// Configuration constants
+// NOTE: Update TARGET_COMPATIBILITY_DATE periodically to match the latest Cloudflare Workers compatibility date
+// See: https://developers.cloudflare.com/workers/configuration/compatibility-dates/
 const TARGET_COMPATIBILITY_DATE = "2025-10-08";
+const WORKSPACE_SCOPE = "@repo/";
 
 type FileDiagnostic = {
   filePath: string;
@@ -68,6 +72,51 @@ function lintWorkspace(workspacePath: string, fix: boolean): FileDiagnostic[] {
   return allProblems;
 }
 
+function getExpectedWranglerName(packageJson: PackageJson | null): string {
+  if (!packageJson?.name) return "";
+  return packageJson.name.replace(WORKSPACE_SCOPE, "");
+}
+
+function applyWranglerConfigFixes(
+  wrangler: WranglerConfig,
+  packageJson: PackageJson | null,
+): void {
+  wrangler.compatibility_date = TARGET_COMPATIBILITY_DATE;
+  wrangler.observability = { enabled: true };
+  wrangler.upload_source_maps = true;
+  if (packageJson?.name) {
+    wrangler.name = getExpectedWranglerName(packageJson);
+  }
+}
+
+function getWranglerConfigProblems(
+  wrangler: WranglerConfig,
+  packageJson: PackageJson | null,
+): string[] {
+  const problems: string[] = [];
+
+  if (wrangler.compatibility_date !== TARGET_COMPATIBILITY_DATE) {
+    problems.push(
+      `"compatibility_date" should be set to "${TARGET_COMPATIBILITY_DATE}"`,
+    );
+  }
+  if (wrangler.observability?.enabled !== true) {
+    problems.push(`"observability" should be set to { "enabled": true }`);
+  }
+  if (wrangler.upload_source_maps !== true) {
+    problems.push(`"upload_source_maps" should be set to true`);
+  }
+
+  if (packageJson?.name) {
+    const expectedName = getExpectedWranglerName(packageJson);
+    if (wrangler.name !== expectedName) {
+      problems.push(`"name" should be set to "${expectedName}"`);
+    }
+  }
+
+  return problems;
+}
+
 function lintWranglerToml(
   workspacePath: string,
   filePath: string,
@@ -101,37 +150,12 @@ function lintWranglerJsonC(
     : null;
 
   if (fix) {
-    wrangler.compatibility_date = TARGET_COMPATIBILITY_DATE;
-    wrangler.observability = { enabled: true };
-    wrangler.upload_source_maps = true;
-    if (packageJson?.name) {
-      wrangler.name = packageJson.name.replace("@repo/", "");
-    }
+    applyWranglerConfigFixes(wrangler, packageJson);
     writeJsonC(filePath, wrangler);
     return [];
   }
 
-  const problems = [];
-  if (wrangler.compatibility_date !== TARGET_COMPATIBILITY_DATE) {
-    problems.push(
-      `"compatibility_date" should be set to "${TARGET_COMPATIBILITY_DATE}"`,
-    );
-  }
-  if (wrangler.observability?.enabled !== true) {
-    problems.push(`"observability" should be set to { "enabled": true }`);
-  }
-  if (wrangler.upload_source_maps !== true) {
-    problems.push(`"upload_source_maps" should be set to true`);
-  }
-
-  if (packageJson?.name) {
-    const expectedName = packageJson.name.replace("@repo/", "");
-    if (wrangler.name !== expectedName) {
-      problems.push(`"name" should be set to "${expectedName}"`);
-    }
-  }
-
-  return problems;
+  return getWranglerConfigProblems(wrangler, packageJson);
 }
 
 function lintWranglerJson(
@@ -150,37 +174,12 @@ function lintWranglerJson(
     : null;
 
   if (fix) {
-    wrangler.compatibility_date = TARGET_COMPATIBILITY_DATE;
-    wrangler.observability = { enabled: true };
-    wrangler.upload_source_maps = true;
-    if (packageJson?.name) {
-      wrangler.name = packageJson.name.replace("@repo/", "");
-    }
+    applyWranglerConfigFixes(wrangler, packageJson);
     writeJson(filePath, wrangler);
     return [];
   }
 
-  const problems = [];
-  if (wrangler.compatibility_date !== TARGET_COMPATIBILITY_DATE) {
-    problems.push(
-      `"compatibility_date" should be set to "${TARGET_COMPATIBILITY_DATE}"`,
-    );
-  }
-  if (wrangler.observability?.enabled !== true) {
-    problems.push(`"observability" should be set to { "enabled": true }`);
-  }
-  if (wrangler.upload_source_maps !== true) {
-    problems.push(`"upload_source_maps" should be set to true`);
-  }
-
-  if (packageJson?.name) {
-    const expectedName = packageJson.name.replace("@repo/", "");
-    if (wrangler.name !== expectedName) {
-      problems.push(`"name" should be set to "${expectedName}"`);
-    }
-  }
-
-  return problems;
+  return getWranglerConfigProblems(wrangler, packageJson);
 }
 
 function lintPackageJson(
