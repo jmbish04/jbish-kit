@@ -1,11 +1,11 @@
+import chalk from "chalk";
+import { promises as fs } from "fs";
+import path from "path";
 import { v4 as uuid } from "uuid";
 import { BranchManager } from "../git/branch-manager";
 import { CommitHandler } from "../git/commit-handler";
-import { WebSocketClient } from "../websocket/client";
 import type { TaskMessage } from "../types";
-import { promises as fs } from "fs";
-import path from "path";
-import chalk from "chalk";
+import { WebSocketClient } from "../websocket/client";
 
 export interface GeneratePageOptions {
   route: string;
@@ -49,8 +49,7 @@ export async function generatePage(
 
     const wsClient = new WebSocketClient({
       agentUrl:
-        process.env.JBISH_AGENT_URL ||
-        "https://jbishkit-agent.workers.dev",
+        process.env.JBISH_AGENT_URL || "https://jbishkit-agent.workers.dev",
       verbose: options.verbose ?? true,
       debug: options.debug ?? false,
       useMock: true, // Use mock for now until agent is deployed
@@ -60,13 +59,20 @@ export async function generatePage(
 
     // 5. Send task to agent
     const repoUrl = await branchManager.getRemoteUrl();
+
+    // Validate required environment variables
+    const githubToken = process.env.GITHUB_TOKEN;
+    if (!githubToken) {
+      throw new Error("GITHUB_TOKEN environment variable is not set.");
+    }
+
     const taskMessage: TaskMessage = {
       type: "task:generate_page",
       taskId,
       repo: repoUrl,
       branch: branchName,
       auth: {
-        github: process.env.GITHUB_TOKEN || (() => { throw new Error('GITHUB_TOKEN environment variable is not set.'); })(),
+        github: githubToken,
         worker: generateWorkerJWT(),
       },
       args: {
@@ -165,10 +171,7 @@ export interface ${componentName}Data {}
     2,
   );
 
-  await fs.writeFile(
-    path.join(pagePath, ".jbishkit.json"),
-    markerContent,
-  );
+  await fs.writeFile(path.join(pagePath, ".jbishkit.json"), markerContent);
 }
 
 function capitalize(str: string): string {

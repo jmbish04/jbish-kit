@@ -19,6 +19,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@repo/core": "workspace:*",
     "commander": "^12.1.0",
     "simple-git": "^3.27.0",
     "ws": "^8.18.0",

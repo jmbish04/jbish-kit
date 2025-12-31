@@ -17,7 +17,14 @@ jbish init my-app
 # Generate a new page with AI agent
 jbish generate page pricing --route /pricing --features charts,forms
 
+# Add a new agent class
+jbish add agent DocumentParser --tools "pdf-lib" --providers "anthropic"
+
+# Add a new AI module
+jbish add ai-module TextSummarizer --default-provider "anthropic"
+
 # Run health audit
+
 jbish health audit
 
 # Lint and fix code
@@ -31,6 +38,7 @@ jbish lint --auto-fix
 Initialize a new JBishKit project.
 
 **Options:**
+
 - `-t, --template <template>` - Project template (fullstack-chat, admin-dashboard, etc.)
 - `--ai <providers...>` - AI providers to include (anthropic, openai, cloudflare-ai)
 - `--bindings <types...>` - Cloudflare bindings (d1, kv, r2, vectorize, queue)
@@ -42,6 +50,7 @@ Initialize a new JBishKit project.
 Generate a new page with AI agent assistance.
 
 **Options:**
+
 - `-r, --route <path>` - Route path (default: /)
 - `-f, --features <features...>` - Features to include (charts, forms, real-time, etc.)
 - `--ui-library <library>` - UI library to use (shadcn, mui, chakra)
@@ -55,15 +64,54 @@ Generate a new page with AI agent assistance.
 Generate a new AI agent.
 
 **Options:**
+
 - `-t, --tools <tools...>` - Tools to include
 - `-p, --providers <providers...>` - AI providers
 - `-c, --capabilities <capabilities...>` - Agent capabilities
+
+### `jbish add agent <name>`
+
+Add a new agent class extending BaseAgent to your project.
+
+**Options:**
+
+- `-d, --dir <directory>` - Output directory (default: packages/core/agents)
+- `--tools <tools>` - Comma-separated list of tools
+- `--providers <providers>` - Comma-separated list of AI providers
+
+**Example:**
+
+```bash
+jbish add agent DocumentParser --tools "pdf-lib,mammoth" --providers "anthropic,openai"
+```
+
+### `jbish add core-agent <name>`
+
+Alias for `jbish add agent <name>`.
+
+### `jbish add ai-module <name>`
+
+Add a new AI module class extending BaseAIModule to your project.
+
+**Options:**
+
+- `-d, --dir <directory>` - Output directory (default: packages/core/ai-modules)
+- `--providers <providers>` - Comma-separated AI providers (default: anthropic,openai)
+- `--default-provider <provider>` - Default AI provider (default: anthropic)
+- `--default-model <model>` - Default AI model
+
+**Example:**
+
+```bash
+jbish add ai-module TextSummarizer --providers "anthropic,openai" --default-model "claude-3-sonnet-20240229"
+```
 
 ### `jbish health`
 
 Health check system commands.
 
 **Subcommands:**
+
 - `audit` - Run comprehensive health audit
 - `status` - View current health status
 
@@ -72,6 +120,7 @@ Health check system commands.
 Lint and fix code with AI agent.
 
 **Options:**
+
 - `--auto-fix` - Auto-approve agent fixes
 - `--watch` - Watch mode with auto-fixing
 - `--files <files...>` - Specific files to lint
@@ -81,6 +130,7 @@ Lint and fix code with AI agent.
 Deploy to Cloudflare.
 
 **Options:**
+
 - `--preview` - Deploy preview with validation
 
 ## Environment Variables
@@ -91,7 +141,9 @@ Deploy to Cloudflare.
 
 ## Architecture
 
-The CLI connects to a deployed Worker Agent via WebSocket. The agent:
+### 2. Remote AI Agent (generate commands)
+
+Commands like `generate page` connect to a deployed Worker Agent via WebSocket. The agent:
 
 1. Clones your repository in a sandbox environment
 2. Executes the requested task (generate page, lint, health audit, etc.)
@@ -102,6 +154,7 @@ The CLI connects to a deployed Worker Agent via WebSocket. The agent:
 ## Development
 
 ```bash
+
 # Install dependencies
 bun install
 
@@ -113,6 +166,8 @@ bun dev
 
 # Test
 bun test
+# Type check
+bun run typecheck
 ```
 
 ## License

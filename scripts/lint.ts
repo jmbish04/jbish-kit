@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import MarkdownError from "./MarkdownError";
 import {
   getAllWorkspacePaths,
   readJson,
@@ -10,7 +11,6 @@ import {
   type PackageJson,
   type WranglerConfig,
 } from "./util";
-import MarkdownError from "./MarkdownError";
 
 export type LintConfig = {
   projectDirectory: string;

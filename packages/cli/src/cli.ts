@@ -1,14 +1,24 @@
 #!/usr/bin/env bun
-import { Command } from "commander";
+/**
+ * @file CLI entry point for JBish-Kit
+ *
+ * This CLI provides commands for managing agents, AI modules, and code generation.
+ */
+
 import chalk from "chalk";
-import { init } from "./commands/init";
+import { Command } from "commander";
+import { addAgent } from "./commands/add-agent";
+import { addAIModule } from "./commands/add-ai-module";
 import { generatePage } from "./commands/generate";
+import { init } from "./commands/init";
 
 const program = new Command();
 
 program
   .name("jbish")
-  .description("JBishKit - Cloudflare Workers development toolkit with AI agents")
+  .description(
+    "JBishKit - Cloudflare Workers development toolkit with AI agents",
+  )
   .version("0.1.0");
 
 // Init command
@@ -66,9 +76,7 @@ generate
   });
 
 // Health commands
-const health = program
-  .command("health")
-  .description("Health check system");
+const health = program.command("health").description("Health check system");
 
 health
   .command("audit")
@@ -112,6 +120,44 @@ program
     console.log("Options:", options);
     // TODO: Implement deploy
   });
+
+// Add commands for scaffolding agents and AI modules
+const add = program
+  .command("add")
+  .description("Add new components to your project");
+
+add
+  .command("agent <name>")
+  .description("Add a new agent extending BaseAgent")
+  .option("-d, --dir <directory>", "Output directory", "packages/core/agents")
+  .option("--tools <tools>", "Comma-separated list of tools")
+  .option("--providers <providers>", "Comma-separated list of AI providers")
+  .action(addAgent);
+
+add
+  .command("core-agent <name>")
+  .description("Add a new core agent (alias for add agent)")
+  .option("-d, --dir <directory>", "Output directory", "packages/core/agents")
+  .option("--tools <tools>", "Comma-separated list of tools")
+  .option("--providers <providers>", "Comma-separated list of AI providers")
+  .action(addAgent);
+
+add
+  .command("ai-module <name>")
+  .description("Add a new AI module extending BaseAIModule")
+  .option(
+    "-d, --dir <directory>",
+    "Output directory",
+    "packages/core/ai-modules",
+  )
+  .option(
+    "--providers <providers>",
+    "Comma-separated list of AI providers",
+    "anthropic,openai",
+  )
+  .option("--default-provider <provider>", "Default AI provider", "anthropic")
+  .option("--default-model <model>", "Default AI model")
+  .action(addAIModule);
 
 // Agent commands
 const agent = program

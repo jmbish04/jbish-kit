@@ -31,6 +31,7 @@ JBishKit is a revolutionary development toolkit that combines a local CLI, deplo
 The CLI orchestrates Git operations and communicates with the Worker Agent via WebSocket.
 
 **Features:**
+
 - Project initialization with templates
 - AI-powered page generation
 - Agent creation with customizable tools
@@ -39,6 +40,7 @@ The CLI orchestrates Git operations and communicates with the Worker Agent via W
 - Real-time progress updates
 
 **Quick Start:**
+
 ```bash
 # Install CLI
 bun add -g @jmbish/cli
@@ -55,6 +57,7 @@ jbish generate page pricing --route /pricing --features charts,forms
 Deployed Cloudflare Worker that executes tasks in a sandbox environment.
 
 **Features:**
+
 - WebSocket communication with CLI
 - Sandbox SDK integration for isolated execution
 - AI-powered code generation
@@ -62,6 +65,7 @@ Deployed Cloudflare Worker that executes tasks in a sandbox environment.
 - Modular task system
 
 **Workflow:**
+
 1. Receives task from CLI via WebSocket
 2. Clones repository in sandbox
 3. Executes AI-powered code generation
@@ -74,6 +78,7 @@ Deployed Cloudflare Worker that executes tasks in a sandbox environment.
 Visual QA validation service using Browser Rendering API.
 
 **Features:**
+
 - Automated UI testing
 - Visual regression detection
 - Accessibility checks
@@ -83,11 +88,13 @@ Visual QA validation service using Browser Rendering API.
 ## Task Types
 
 ### Generate Page
+
 ```bash
 jbish generate page dashboard --route /dashboard --features charts,tables,forms
 ```
 
 Creates a new page with:
+
 - Component scaffolding
 - Type definitions
 - Route registration
@@ -95,33 +102,39 @@ Creates a new page with:
 - Visual validation (optional)
 
 ### Generate Agent
+
 ```bash
 jbish generate agent document-analyzer --tools pdf-parsing,ocr --providers anthropic
 ```
 
 Creates a new AI agent with:
+
 - Base agent structure
 - Tool integrations
 - Provider configuration
 - Health checks
 
 ### Lint Fix
+
 ```bash
 jbish lint --auto-fix
 ```
 
 AI-powered linting:
+
 - Detects code issues
 - Generates fixes
 - Creates PR with changes
 - Auto-merge option
 
 ### Health Audit
+
 ```bash
 jbish health audit --comprehensive
 ```
 
 Comprehensive health checks:
+
 - Binding availability
 - API key validation
 - Performance metrics
@@ -209,6 +222,7 @@ jbish-kit/
 ## Environment Variables
 
 ### CLI
+
 ```bash
 JBISH_AGENT_URL=https://jbishkit-agent.workers.dev
 GITHUB_TOKEN=ghp_xxxxxxxxxxxxx
@@ -216,6 +230,7 @@ WORKER_SECRET=your-secret-key
 ```
 
 ### Worker Agent
+
 ```bash
 GITHUB_TOKEN=ghp_xxxxxxxxxxxxx
 ANTHROPIC_API_KEY=sk-ant-xxxxxxxxxxxxx
@@ -226,6 +241,7 @@ WORKER_SECRET=your-secret-key
 ## Roadmap
 
 ### Phase 1: Foundation ✅
+
 - [x] CLI scaffolding with Git operations
 - [x] WebSocket client with mock responses
 - [x] Worker agent with WebSocket handler
@@ -233,6 +249,7 @@ WORKER_SECRET=your-secret-key
 - [x] Message protocol
 
 ### Phase 2: Core Tasks (In Progress)
+
 - [ ] Sandbox SDK integration
 - [ ] AI-powered code generation
 - [ ] GitHub PR creation
@@ -241,6 +258,7 @@ WORKER_SECRET=your-secret-key
 - [ ] Health Audit task
 
 ### Phase 3: Stagehand Integration
+
 - [ ] Stagehand Worker (Browser Rendering API)
 - [ ] Visual validation with screenshots
 - [ ] Vision model integration
@@ -248,12 +266,14 @@ WORKER_SECRET=your-secret-key
 - [ ] Interaction testing
 
 ### Phase 4: Templates & Monorepo
+
 - [ ] Project templates (fullstack-chat, admin-dashboard)
 - [ ] Turborepo integration
 - [ ] Build/deploy scripts
 - [ ] Template customization
 
 ### Phase 5: Developer Experience
+
 - [ ] IDE integration
 - [ ] Auto-merge with confidence scoring
 - [ ] Watch mode for lint/health

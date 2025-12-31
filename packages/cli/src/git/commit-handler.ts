@@ -96,7 +96,10 @@ export class CommitHandler {
     return status.files.length > 0;
   }
 
-  async stageAndCommit(message: string, files: string[] = ["."]): Promise<void> {
+  async stageAndCommit(
+    message: string,
+    files: string[] = ["."],
+  ): Promise<void> {
     await this.stageFiles(files);
     await this.commit(message);
   }

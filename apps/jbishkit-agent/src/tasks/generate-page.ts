@@ -26,7 +26,12 @@ export class GeneratePageTask extends BaseTask {
 
     // Step 3: Generate page code
     this.progress(50, "Generating page code...");
-    const code = await this.generatePageCode(pageName, route, features, analysis);
+    const code = await this.generatePageCode(
+      pageName,
+      route,
+      features,
+      analysis,
+    );
     this.log(`Generated ${code.files.length} files`);
 
     // Step 4: Write code to repository
@@ -119,7 +124,12 @@ export class GeneratePageTask extends BaseTask {
     name: string,
     route: string,
     features: string[],
-    analysis: { framework: string; uiLibrary: string; stateManagement: string; routing: string; },
+    analysis: {
+      framework: string;
+      uiLibrary: string;
+      stateManagement: string;
+      routing: string;
+    },
   ): Promise<{ files: Array<{ path: string; content: string }> }> {
     // TODO: Implement AI-powered code generation
     await this.sleep(1000);

@@ -75,7 +75,7 @@ export const TaskMessageSchema = z.object({
     github: z.string(),
     worker: z.string(),
   }),
-  args: z.record(z.any()),
+  args: z.record(z.string(), z.any()),
   settings: z.object({
     verbose: z.boolean(),
     debug: z.boolean(),

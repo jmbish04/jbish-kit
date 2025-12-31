@@ -12,7 +12,10 @@ export abstract class BaseTask {
 
   abstract execute(task: TaskMessage): Promise<void>;
 
-  protected log(message: string, level: "debug" | "info" | "warn" | "error" = "info"): void {
+  protected log(
+    message: string,
+    level: "debug" | "info" | "warn" | "error" = "info",
+  ): void {
     this.session.log(message, level);
   }
 
