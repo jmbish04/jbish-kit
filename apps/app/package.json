@@ -33,7 +33,7 @@
     "jotai": "^2.15.2",
     "jotai-effect": "^2.1.5",
     "localforage": "^1.10.0",
-    "lucide-react": "^0.562.0",
+    "lucide-react": "^0.563.0",
     "react": "^19.2.1",
     "react-dom": "^19.2.1",
     "react-error-boundary": "^6.0.0",
