@@ -1,0 +1,7 @@
+.agents/ecosystem
+scripts/gh.mjs
+scripts/run.sh
+scripts/runner-guard
+scripts/fix-d1-migrations.mjs
+scripts/reui.mjs
+scripts/ui-guard.mjs
